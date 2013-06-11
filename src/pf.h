@@ -1,5 +1,9 @@
+#ifndef PF_H
+#define PF_H
+
 #include <cmath>
 #include <vector>
+#include "quaternion.h"
 using namespace std;
 
 class PFRobot {
@@ -8,12 +12,13 @@ public:
 private:
     struct particle {
         // internal state
-        double x, y, z, theta, phi, psi, vx, vy, vz, vtheta, vphi, vpsi;
+        double x, y, z, dx, dy, dz;
+        quaternion q, dq;
         double weight;
     };
     struct command {
         // amount of thrust to apply to each of the 4 rotors
-        double q1, q2, q3, q4;
+        double f1, f2, f3, f4;
     };
     struct reading {
         // sensor reading
@@ -25,3 +30,4 @@ private:
     void sensorUpdate(reading s, particle * p);
     vector <particle> bel(MIN_PARTICLES);
 };
+#endif
